@@ -1,0 +1,70 @@
+<style>
+  .img__wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+    .img__wrap {
+      position: relative;
+      height: 40vh;
+  }
+  .image__overlay_wap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      border: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #00000045;
+  }
+  .image__overlay_wap h1 {
+      color: #fff;
+  }
+  @media (max-width:768px){
+      .img__wrap {
+          height: 30vh;
+      }
+  }
+</style>
+<div class="collection__img__dynamic">
+    <div class="{% if section.settings.make_full_width %}page-width {% endif %} img__wrapper_parent">
+        <div class="img__wrap">
+            {% if collection.featured_image %}
+            <img src="{{ collection.featured_image | image_url }}" loading="lazy" width="100%" height="100%" alt="Image">
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          <div class="image__overlay_wap">
+            <h1>{{ collection.title | upcase }}</h1>
+          </div>
+          
+        </div>
+    </div>
+</div>
+{% schema %}
+  {
+    "name": "Collection Feature Image",
+    "class": "section",
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    },
+    "settings": [
+       {
+        "type": "checkbox",
+        "id": "make_full_width",
+        "label": "Make Full Width",
+         "info": "Uncheck it if you do not need full width",
+        "default": true
+      }
+    ],
+      "presets": [
+    {
+      "name": "Collection Feature Image"
+    }
+  ]
+  }
+{% endschema %}
